@@ -5,11 +5,11 @@ var passport = require("passport");
 var User = require("../models/user");
 
 //ROOT ROUTE
-router.get("/", function(req, res){
+router.get("/RentApartman", function(req, res){
     res.render("landing");
 });
 
-router.get("/aboutUs",function(req,res){
+router.get("/RentApartman/aboutUs",function(req,res){
     res.render("aboutus")
 })
 ///////////////////////////
@@ -17,11 +17,11 @@ router.get("/aboutUs",function(req,res){
 //////////////////////
 
 /// show register form 
-router.get("/register",function(req,res){
+router.get("/RentApartman/register",function(req,res){
     res.render("register");
 })
 //sign up logic
-router.post("/register",function(req,res){
+router.post("/RentApartman/register",function(req,res){
     var newUser = new User({username:req.body.username});
     //eval(require('locus'))
     if(req.body.adminCode === "secretcode123"){
@@ -40,18 +40,18 @@ router.post("/register",function(req,res){
 });
 
 //show login form
-router.get("/login",function(req,res){  
+router.get("/RentApartman/login",function(req,res){  
     res.render("login"); 
 })
 // handling login logic i logira i middleware,ovo usredini  
-router.post("/login",passport.authenticate("local",
+router.post("/RentApartman/login",passport.authenticate("local",
     {
         successRedirect:"/RentApartman/apartments", 
         failureRedirect:"/login"
     }),function(req,res){ 
 }) 
 // logout route
-router.get("/logout",function(req,res){ 
+router.get("/RentApartman/logout",function(req,res){ 
     req.logout();
     req.flash("success","Uspješno ste se odjavili") 
     res.redirect("/RentApartman/apartments");

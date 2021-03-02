@@ -10,7 +10,7 @@ var url = require("url")
 var fs = require("fs")
 
 //INDEX - show all apartments
-router.get("RentApartman/apartments", function(req, res){
+router.get("/RentApartman/apartments", function(req, res){
     console.log('aaaaaaaaaaa')
     var noMatch = null;
     if(req.query.search){
@@ -119,4 +119,3 @@ function escapeRegex(str) {
 };
 
 module.exports = router;
-
