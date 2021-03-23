@@ -54,7 +54,7 @@ router.post("/login",passport.authenticate("local",
 router.get("/logout",function(req,res){
     req.logout();
     req.flash("success","Uspješno ste se odjavili")
-    res.redirect("/apartments");
+    res.redirect("/RentApartman/apartments");
 })
 
 module.exports=router;
