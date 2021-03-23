@@ -6,7 +6,7 @@ var Comment = require("../models/comment");
 var middleware = require("../middleware");
 
 //Comments New
-router.get("RentApartman/apartments/:id/comments/new",middleware.isLoggedIn, function(req, res){
+router.get("/apartments/:id/comments/new",middleware.isLoggedIn, function(req, res){
     // find apartment by id
     Apartment.findById(req.params.id, function(err, apartment){
         if(err){
@@ -18,12 +18,12 @@ router.get("RentApartman/apartments/:id/comments/new",middleware.isLoggedIn, fun
 });
 
 //Comments Create
-router.post("RentApartman/apartments/:id/comments",middleware.isLoggedIn,function(req, res){
+router.post("/apartments/:id/comments",middleware.isLoggedIn,function(req, res){
    //lookup apartment using ID
    Apartment.findById(req.params.id, function(err, apartment){
        if(err){
            console.log(err);
-           res.redirect("RentApartman/apartments");
+           res.redirect("apartments");
        } else {
         Comment.create(req.body.comment, function(err, comment){
            if(err){
@@ -39,7 +39,7 @@ router.post("RentApartman/apartments/:id/comments",middleware.isLoggedIn,functio
                apartment.save();
                console.log(comment);
                req.flash("success","Uspješno dodan komentar")
-               res.redirect('RentApartman/apartments/' + apartment._id);
+               res.redirect('apartments/' + apartment._id);
            }
         });
        }
@@ -47,7 +47,7 @@ router.post("RentApartman/apartments/:id/comments",middleware.isLoggedIn,functio
 });
 
 // COMMENT EDIT ROUTE
-router.get("RentApartman/apartments/:id/comments/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
+router.get("/apartments/:id/comments/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
     Apartment.findById(req.params.id,function(err,foundApartment){
         if(err || !foundApartment){
             req.flash("error","No Apartment found")
@@ -64,25 +64,25 @@ router.get("RentApartman/apartments/:id/comments/:comment_id/edit", middleware.c
 });
 
 // COMMENT UPDATE
-router.put("RentApartman/apartments/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
+router.put("/apartments/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
       if(err){
           res.redirect("back");
       } else {
-          res.redirect("RentApartman/apartments/" + req.params.id );
+          res.redirect("apartments/" + req.params.id );
       }
    });
 });
 
 // COMMENT DESTROY ROUTE
-router.delete("RentApartman/apartments/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
+router.delete("/apartments/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
     //findByIdAndRemove
     Comment.findByIdAndRemove(req.params.comment_id, function(err){
        if(err){
            res.redirect("back");
        } else {
            req.flash("success","Komentar izbrisan !!")
-           res.redirect("RentApartman/apartments/" + req.params.id);
+           res.redirect("/apartments/" + req.params.id);
        }
     });
 });

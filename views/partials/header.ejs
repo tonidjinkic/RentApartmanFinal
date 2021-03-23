@@ -3,16 +3,16 @@
     <head>
         <title>RentApartman</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/public/stylesheets/main.css">
+        <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div class="navbar-header"> 
+            <div class="navbar-header">
                 <a href="/"><img src="https://www.flaticon.com/premium-icon/icons/svg/1018/1018627.svg" height="55" width="156" /></a>
             </div>
 
-            
+
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="<%= typeof page !== 'undefined' && page === 'apartments' ? 'active' : '' %>"><a href="/apartments">Naslovna</a></li>
@@ -32,14 +32,14 @@
     </nav>
 
     <div class="container">
-        <% if(error && error.length > 0){ %> 
+        <% if(error && error.length > 0){ %>
             <div class="alert alert-danger" role="alert">
                 <%= error %></div>
         <% } %>
-        <% if(success && success.length > 0){ %> 
+        <% if(success && success.length > 0){ %>
             <div class="alert alert-success" role="alert">
                 <%= success %></div>
         <% } %>
     </div>
- 
+
 

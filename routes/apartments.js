@@ -10,7 +10,7 @@ var url = require("url")
 var fs = require("fs")
 
 //INDEX - show all apartments
-router.get("/RentApartman/apartments", function(req, res){
+router.get("/apartments", function(req, res){
     console.log('aaaaaaaaaaa')
     var noMatch = null;
     if(req.query.search){
@@ -22,7 +22,7 @@ router.get("/RentApartman/apartments", function(req, res){
                 if(allApartments.length < 1) {
                     noMatch = "Nema apartmana sa takvim imenom,pokušajte ponovo"
                 }
-               res.render("RentApartman/apartments/index",{apartments:allApartments,noMatch:noMatch});
+               res.render("apartments/index",{apartments:allApartments,noMatch:noMatch});
             }
          });
     }
@@ -31,13 +31,13 @@ router.get("/RentApartman/apartments", function(req, res){
        if(err){
            console.log(err);
        } else {
-          res.render("RentApartman/apartments/index",{apartments:allApartments,noMatch:noMatch});
+          res.render("apartments/index",{apartments:allApartments,noMatch:noMatch});
        }
     });
 });
 
 //CREATE - add new apartment to DB
-router.post("RentApartman/apartments", middleware.isLoggedIn, function(req, res){
+router.post("/apartments", middleware.isLoggedIn, function(req, res){
     // get data from form and add to apartments array
     var name = req.body.name;
     var city = req.body.city;
@@ -56,18 +56,18 @@ router.post("RentApartman/apartments", middleware.isLoggedIn, function(req, res)
         } else {
             //redirect back to apartments page
             console.log(newlyCreated);
-            res.redirect("RentApartman/apartments");
+            res.redirect("apartments");
         }
     });
 });
 
 //NEW - show form to create new apartment
-router.get("RentApartman/apartments/new", middleware.isLoggedIn, function(req, res){
-   res.render("RentApartman/apartments/new"); 
+router.get("/apartments/new", middleware.isLoggedIn, function(req, res){
+   res.render("apartments/new");
 });
 
 // SHOW - shows more info about one apartment
-router.get("RentApartman/apartments/:id", function(req, res){
+router.get("/apartments/:id", function(req, res){
     //find the apartment with provided ID
     Apartment.findById(req.params.id).populate("comments").exec(function(err, foundApartment){
         if(err || !foundApartment){
@@ -76,43 +76,43 @@ router.get("RentApartman/apartments/:id", function(req, res){
         } else {
             console.log(foundApartment)
             //render show template with that apartment
-            res.render("RentApartman/apartments/show", {apartment: foundApartment});
+            res.render("apartments/show", {apartment: foundApartment});
         }
     });
 });
 
 // EDIT apartment ROUTE
-router.get("RentApartman/apartments/:id/edit", middleware.checkApartmentOwnership, function(req, res){
+router.get("/apartments/:id/edit", middleware.checkApartmentOwnership, function(req, res){
     Apartment.findById(req.params.id, function(err, foundApartment){
-        res.render("RentApartman/apartments/edit", {apartment: foundApartment});
+        res.render("apartments/edit", {apartment: foundApartment});
     });
 });
 
 // UPDATE apartment ROUTE
-router.put("RentApartman/apartments/:id",middleware.checkApartmentOwnership, function(req, res){
+router.put("/apartments/:id",middleware.checkApartmentOwnership, function(req, res){
     // find and update the correct apartment
     Apartment.findByIdAndUpdate(req.params.id, req.body.apartment, function(err, updatedApartment){
        if(err){
-           res.redirect("RentApartman/apartments");
+           res.redirect("/apartments");
        } else {
            //redirect somewhere(show page)
-           res.redirect("RentApartman/apartments/" + req.params.id);
+           res.redirect("/apartments/" + req.params.id);
        }
     });
 });
 
 // DESTROY apartments ROUTE
-router.delete("RentApartman/apartments/:id",middleware.checkApartmentOwnership, function(req, res){
+router.delete("/apartments/:id",middleware.checkApartmentOwnership, function(req, res){
    Apartment.findByIdAndRemove(req.params.id, function(err){
       if(err){
-          res.redirect("RentApartman/apartments");
+          res.redirect("/apartments");
       } else {
-          res.redirect("RentApartman/apartments");
+          res.redirect("/apartments");
       }
    });
 });
 
-// zastita ddos napada 
+// zastita ddos napada
 
 function escapeRegex(str) {
     return str.toString().replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
