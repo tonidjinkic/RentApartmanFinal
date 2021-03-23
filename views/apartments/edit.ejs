@@ -3,7 +3,7 @@
     <div class="row">
         <h1 style="text-align: center;color: white;">Uredi <%= apartment.name %></h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/apartments/<%= apartment._id %>?_method=PUT" method="POST">
+            <form action="apartments/<%= apartment._id %>?_method=PUT" method="POST">
                 <div class="form-group">
                     <input class="form-control" type="text" name="apartment[name]" value="<%= apartment.name %>">
                 </div>
@@ -20,7 +20,7 @@
                     <button class="btn btn-lg btn-primary btn-block">Potvrdi!</button>
                 </div>
             </form>
-            <a href="/apartments" style="color:white;font-size:medium">Vrati se</a>
+            <a href="apartments" style="color:white;font-size:medium">Vrati se</a>
         </div>
     </div>
 </div>
