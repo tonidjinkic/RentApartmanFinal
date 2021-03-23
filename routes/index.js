@@ -5,23 +5,23 @@ var passport = require("passport");
 var User = require("../models/user");
 
 //ROOT ROUTE
-router.get("/RentApartman", function(req, res){
+router.get("/", function(req, res){
     res.render("landing");
 });
 
-router.get("/RentApartman/aboutUs",function(req,res){
+router.get("/aboutUs",function(req,res){
     res.render("aboutus")
 })
 ///////////////////////////
 // AUTH ROUTES
 //////////////////////
 
-/// show register form 
-router.get("/RentApartman/register",function(req,res){
+/// show register form
+router.get("/register",function(req,res){
     res.render("register");
 })
 //sign up logic
-router.post("/RentApartman/register",function(req,res){
+router.post("/register",function(req,res){
     var newUser = new User({username:req.body.username});
     //eval(require('locus'))
     if(req.body.adminCode === "secretcode123"){
@@ -33,28 +33,28 @@ router.post("/RentApartman/register",function(req,res){
             return res.render("register")
         }
         passport.authenticate("local")(req,res,function(){
-            req.flash("success","Dobrodošli u RentApartman " +user.username)
-            res.redirect("/RentApartman/apartments")
+            req.flash("success","Dobrodošli u " +user.username)
+            res.redirect("/apartments")
         });
     });
 });
 
 //show login form
-router.get("/RentApartman/login",function(req,res){  
-    res.render("login"); 
+router.get("/login",function(req,res){
+    res.render("login");
 })
-// handling login logic i logira i middleware,ovo usredini  
-router.post("/RentApartman/login",passport.authenticate("local",
+// handling login logic i logira i middleware,ovo usredini
+router.post("/login",passport.authenticate("local",
     {
-        successRedirect:"/RentApartman/apartments", 
+        successRedirect:"/apartments",
         failureRedirect:"/login"
-    }),function(req,res){ 
-}) 
+    }),function(req,res){
+})
 // logout route
-router.get("/RentApartman/logout",function(req,res){ 
+router.get("/logout",function(req,res){
     req.logout();
-    req.flash("success","Uspješno ste se odjavili") 
-    res.redirect("/RentApartman/apartments");
+    req.flash("success","Uspješno ste se odjavili")
+    res.redirect("/apartments");
 })
 
 module.exports=router;
